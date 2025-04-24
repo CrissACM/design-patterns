@@ -101,3 +101,60 @@ function main() {
 }
 
 main();
+
+//TODO
+interface PlayerProps {
+  name: string;
+  score: number;
+  level: number;
+}
+
+class Player {
+  readonly name: string;
+  readonly score: number;
+  readonly level: number;
+
+  constructor({ level, name, score }: PlayerProps) {
+    this.name = name;
+    this.score = score;
+    this.level = level;
+  }
+
+  copyWith({ name, score, level }: Partial<Player>): Player {
+    return new Player({
+      name: name ?? this.name,
+      score: score ?? this.score,
+      level: level ?? this.level,
+    });
+  }
+
+  displayState(): void {
+    console.log(`\nJugador: ${this.name}`);
+    console.log(`Puntaje: ${this.score}`);
+    console.log(`Nivel: ${this.level}`);
+  }
+}
+
+function main2() {
+  // Crear jugador inicial
+  let player = new Player({ name: 'Carlos', score: 0, level: 1 });
+  console.log('Estado inicial:');
+  player.displayState();
+
+  // Incrementar el puntaje
+  player = player.copyWith({ score: 10 });
+  console.log('\nDespués de incrementar el puntaje:');
+  player.displayState();
+
+  // Subir de nivel
+  player = player.copyWith({ level: 2 });
+  console.log('\nDespués de subir de nivel:');
+  player.displayState();
+
+  // Cambiar el nombre del jugador
+  player = player.copyWith({ name: 'Carlos Pro' });
+  console.log('\nDespués de cambiar el nombre:');
+  player.displayState();
+}
+
+main2();
